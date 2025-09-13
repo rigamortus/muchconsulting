@@ -1,0 +1,26 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "80:8000"
+    environment:
+      APP_NAME: "{{ app_name | default('DevOps Demo') }}"
+      APP_VERSION: "{{ app_version | default('1.0.0') }}"
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - /opt/app/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - /opt/app/grafana/:/etc/grafana/provisioning

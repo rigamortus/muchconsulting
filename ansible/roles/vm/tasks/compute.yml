@@ -1,0 +1,50 @@
+- name: Create a Compute Instance
+  google.cloud.gcp_compute_instance:
+    name: testvm
+    machine_type: e2-small
+    disks:
+    - auto_delete: 'true'
+      boot: 'true'
+      source: "{{ disk }}"
+    metadata:
+      ssh-keys: "ubuntu:{{ lookup('file', '~/.ssh/my-gcp-key.pub') }}"
+      #startup-script-url: gs:://graphite-playground/bootstrap.sh
+      cost-center: 'muchconsulting'
+    labels:
+      environment: development
+      team: devops
+    network_interfaces:
+    - network: "{{ network }}"
+      access_configs:
+      - name: External NAT
+        nat_ip: "{{ address }}"
+        type: ONE_TO_ONE_NAT
+    zone: europe-west1-b
+    project: "{{ lookup('env','GCP_PROJECT') }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
+    state: "{{ infra_state | default('present') }}"
+    #tags: ssh
+  register: vm
+# - name: set vpc variable
+#   shell: "echo 'ansible_hos: {{ vm.networkInterfaces.accessConfigs.natIP }}' >> ~/devops-demo/ansible/roles/docker/vars/main.yml"
+
+- name: Add new VM to inventory group 'targets'
+  add_host:
+    name: "{{ vm.networkInterfaces[0].accessConfigs[0].natIP }}"
+    groups: targets
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ~/.ssh/my-gcp-key
+  when: infra_state == 'present'
+
+- name: Tag VM with 'ssh'
+  shell: |
+    gcloud compute instances add-tags {{ vm.name }} \
+      --tags ssh \
+      --zone {{ vm.zone }} \
+      --project {{ lookup('env','GCP_PROJECT') }} \
+      --quiet
+  when: infra_state == 'present'
+
+# - debug:
+#     var: vm

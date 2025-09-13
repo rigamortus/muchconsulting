@@ -1,0 +1,75 @@
+---
+# - name: Install Docker
+#   apt:
+#     name: docker.io
+#     state: present
+#     update_cache: yes
+#   become: true
+
+- name: Install Docker-related Packages
+  package:
+    name: '{{ item }}'
+    state: present
+    update_cache: yes
+  loop:
+    - docker.io
+    - docker-compose
+  become: true
+
+
+- name: Ensure /opt/app directory exists
+  file:
+    path: /opt/app
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+  become: true
+
+- name: Docker Compose
+  copy:
+    src: templates/docker-compose.yml.j2
+    dest: /opt/app/docker-compose.yml
+    mode: '0644'
+  become: true
+
+- name: Copy application files
+  copy:
+    src: ../../app/
+    dest: /opt/app/app/
+    mode: '0644'
+  become: true
+
+- name: Copy Dockerfile
+  copy:
+    src: ../../Dockerfile
+    dest: /opt/app/Dockerfile
+    mode: '0644'
+  become: true
+
+- name: Copy Prometheus config
+  copy:
+    src: templates/prometheus/prometheus.yml
+    dest: /opt/app/prometheus.yml
+    mode: '0644'
+  become: true
+
+- name: Copy Grafana provisioning files
+  copy:
+    src: templates/grafana/
+    dest: /opt/app/grafana/
+    mode: '0644'
+  become: true
+  
+- name: Run docker-compose stack
+  community.docker.docker_compose:
+    project_src: /opt/app
+    state: present
+  become: true
+
+
+# - name: Build DockerImage
+#   shell: dock
+
+# - name: Run Container
+#   shell: docker-compose -f /opt/app/docker-compose.yml up -d 

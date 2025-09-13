@@ -1,0 +1,27 @@
+- name: create a network
+  google.cloud.gcp_compute_network:
+    name: gcp-vpc
+    project: "{{ gcp_project }}"
+    auth_kind: "{{ gcp_cred_kind }}"
+    service_account_file: "{{ gcp_cred_file }}"
+    auto_create_subnetworks: true
+    state: "{{ infra_state | default('present') }}"
+  register: network
+  #when: infra_state == 'present'
+
+- name: Allow SSH on demo-network
+  google.cloud.gcp_compute_firewall:
+    name: allow-ssh
+    #network: "https://www.googleapis.com/compute/v1/projects/{{ lookup('env','GCP_PROJECT') }}/global/networks/gcp-vpc"
+    network:
+      name: gcp-vpc
+    allowed:
+      - ip_protocol: tcp
+        ports: ["22"]
+    source_ranges: ["0.0.0.0/0"]
+    target_tags: ["ssh"]
+    project: "{{ lookup('env','GCP_PROJECT') }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
+    state: "{{ infra_state | default('present') }}"
+

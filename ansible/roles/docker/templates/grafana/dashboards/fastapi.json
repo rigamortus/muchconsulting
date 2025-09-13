@@ -1,0 +1,29 @@
+{
+  "id": null,
+  "title": "FastAPI Demo",
+  "schemaVersion": 16,
+  "version": 1,
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Requests Total",
+      "targets": [
+        {
+          "expr": "requests_total",
+          "legendFormat": "requests"
+        }
+      ],
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "stat",
+      "title": "Uptime (seconds)",
+      "targets": [
+        {
+          "expr": "uptime_seconds"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+---
+- name: first step
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  roles:
+   - name: vm
+     role: vm
+  tags: vm
+
+- name: second step
+  hosts: targets
+  gather_facts: false
+  roles:
+   - name: docker
+     role: docker
+  tags: docker

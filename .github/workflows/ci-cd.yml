@@ -26,7 +26,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest app/tests/ -v
+         PYTHONPATH=. pytest app/tests/ -v
 
     - name: Sonar Scan
       uses: sonarsource/sonarqube-scan-action@v5.3.1

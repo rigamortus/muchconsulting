@@ -81,7 +81,16 @@
 #   become: yes
 
 
-
+- name: Ensure /opt directory exists
+  file:
+    path: /opt
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+  tags: docker
+  
 - name: Ensure /opt/app directory exists
   file:
     path: /opt/app

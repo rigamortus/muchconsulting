@@ -29,7 +29,7 @@ jobs:
          PYTHONPATH=. pytest app/tests/ -v
 
     - name: Sonar Scan
-      uses: sonarsource/sonarqube-scan-action@v5.3.1
+      uses: sonarsource/sonarqube-scan-action@1a6d90ebcb0e6a6b1d87e37ba693fe453195ae25
       with:
         args: >
           -Dsonar.projectKey=rigamortus_muchconsulting
@@ -41,13 +41,17 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Login to ACR
+      env:
+        USERNAME: ${{ secrets.DOCKER_USERNAME }} 
+        PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker login -u $USERNAME -p $PASSWORD
+        
     - name: Build Image for Testing
       run: |
         docker build -t demoapp:v1 .
     - name: Run Snyk Test
-      uses: snyk/actions/docker@master
+      uses: snyk/actions/docker@b98d498629f1c368650224d6d212bf7dfa89e4bf
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:

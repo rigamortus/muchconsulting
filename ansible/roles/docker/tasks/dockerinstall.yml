@@ -32,8 +32,8 @@
   file:
     path: /opt/app
     state: directory
-    owner: ubuntu
-    group: ubuntu
+    owner: "{{ ansible_user | default('root') }}"
+    group: "{{ ansible_user | default('root') }}"
     mode: '0750'
   become: true
 

@@ -31,12 +31,6 @@
 #   become: yes
 
 
-- name: Install Docker Packages
-  shell: |
-    apt-get install -y docker.io docker-compose
-  become: yes
-  become_user: root
-
 
 - name: Ensure /opt/app directory exists
   file:

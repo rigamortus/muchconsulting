@@ -47,6 +47,7 @@
       --network gcp-vpc \
       --project {{ lookup('env','GCP_PROJECT') }} \
       --quiet
+  ignore_errors: true
   when: infra_state == 'present'
 
 # - debug:

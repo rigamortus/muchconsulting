@@ -82,15 +82,17 @@
   become: true
   tags: docker
   
-- name: Run docker-compose stack
-  community.docker.docker_compose_v2:
-    project_src: /opt/app
-    state: present
-  become: true
-  tags: docker
+# - name: Run docker-compose stack
+#   community.docker.docker_compose_v2:
+#     project_src: /opt/app
+#     state: present
+#   become: true
+#   tags: docker
 
 # - name: Build DockerImage
 #   shell: dock
 
-# - name: Run Container
-#   shell: docker-compose -f /opt/app/docker-compose.yml up -d 
+- name: Run Container
+  shell: docker-compose -f /opt/app/docker-compose.yml up -d 
+  become: true
+  tags: docker

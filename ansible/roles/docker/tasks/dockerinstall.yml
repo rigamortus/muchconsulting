@@ -1,4 +1,12 @@
 ---
+- name: Unhold all packages
+  shell: apt-mark unhold $(apt-mark showhold)
+  ignore_errors: true
+
+- name: Fix broken installs
+  apt:
+    upgrade: dist
+    update_cache: yes
 - name: Install Docker-related Packages
   package:
     name: '{{ item }}'

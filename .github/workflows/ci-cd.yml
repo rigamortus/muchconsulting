@@ -78,6 +78,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
       run: |
+        touch ~/.ssh/my-gcp-key ~/.ssh/my-gcp-key.pub
         echo $SSH_PRIVATE_KEY > ~/.ssh/my-gcp-key
         chmod 600 ~/.ssh/my-gcp-key
         echo $SSH_PUBLIC_KEY > ~/.ssh/my-gcp-key.pub

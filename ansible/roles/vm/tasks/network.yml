@@ -20,7 +20,7 @@
     source_ranges: ["0.0.0.0/0"]
     target_tags: ["ssh"]
     project: "{{ lookup('env','GCP_PROJECT') }}"
-    auth_kind: serviceaccount
-    service_account_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
+    auth_kind: application
+    #service_account_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
     state: "{{ infra_state | default('present') }}"
 

@@ -17,15 +17,15 @@
     creates: /usr/bin/docker
   become: true
 
-- name: Install Docker-related Packages
-  package:
-    name: '{{ item }}'
-    state: present
-    update_cache: yes
-  loop:
-    - docker.io
-    - docker-compose
-  become: true
+# - name: Install Docker-related Packages
+#   package:
+#     name: '{{ item }}'
+#     state: present
+#     update_cache: yes
+#   loop:
+#     - docker.io
+#     - docker-compose
+#   become: true
 
 
 - name: Ensure /opt/app directory exists

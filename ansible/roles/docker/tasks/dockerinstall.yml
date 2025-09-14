@@ -3,11 +3,13 @@
 #   shell: apt-mark unhold $(apt-mark showhold)
 #   ignore_errors: true
 
-# - name: Fix broken installs
-#   apt:
-#     upgrade: dist
-#     update_cache: yes
-#   become: true
+- name: Update and upgrade apt packages
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+  become_user: root
+  become: yes
 
 - name: Install Docker using official script
   shell: |
@@ -17,15 +19,16 @@
     creates: /usr/bin/docker
   become: true
 
-# - name: Install Docker-related Packages
-#   package:
-#     name: '{{ item }}'
-#     state: present
-#     update_cache: yes
-#   loop:
-#     - docker.io
-#     - docker-compose
-#   become: true
+- name: Install Docker-related Packages
+  package:
+    name: '{{ item }}'
+    state: present
+    update_cache: yes
+  loop:
+    - docker.io
+    - docker-compose
+  become_user: root
+  become: yes
 
 
 - name: Ensure /opt/app directory exists

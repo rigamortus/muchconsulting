@@ -19,16 +19,23 @@
   #   creates: /usr/bin/docker
   # become: true
 
-- name: Install Docker-related Packages
-  apt:
-    name: '{{ item }}'
-    state: present
-    update_cache: yes
-  loop:
-      - docker.io
-      - docker-compose
-  become_user: root
+# - name: Install Docker-related Packages
+#   apt:
+#     name: '{{ item }}'
+#     state: present
+#     update_cache: yes
+#   loop:
+#       - docker.io
+#       - docker-compose
+#   become_user: root
+#   become: yes
+
+
+- name: Install Docker Packages
+  shell: |
+    apt-get install -y docker.io docker-compose
   become: yes
+  become_user: root
 
 
 - name: Ensure /opt/app directory exists

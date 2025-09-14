@@ -11,22 +11,22 @@
   become_user: root
   become: yes
 
-- name: Install Docker using official script
-  shell: |
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sh get-docker.sh
-  args:
-    creates: /usr/bin/docker
-  become: true
+# - name: Install Docker using official script
+#   shell: |
+#     curl -fsSL https://get.docker.com -o get-docker.sh
+#     sh get-docker.sh
+  # args:
+  #   creates: /usr/bin/docker
+  # become: true
 
 - name: Install Docker-related Packages
-  package:
+  apt:
     name: '{{ item }}'
     state: present
     update_cache: yes
   loop:
-    - docker.io
-    - docker-compose
+      - docker.io
+      - docker-compose
   become_user: root
   become: yes
 

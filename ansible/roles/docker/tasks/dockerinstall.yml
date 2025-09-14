@@ -36,10 +36,11 @@
   file:
     path: /opt/app
     state: directory
-    owner: root
-    group: root
+    owner: ubuntu
+    group: ubuntu
     mode: '0750'
   become: true
+  tags: docker
 
 - name: Docker Compose
   copy:
@@ -47,6 +48,7 @@
     dest: /opt/app/docker-compose.yml
     mode: '0640'
   become: true
+  tags: docker
 
 - name: Copy application files
   copy:
@@ -54,6 +56,7 @@
     dest: /opt/app/app/
     mode: '0640'
   become: true
+  tags: docker
 
 - name: Copy Dockerfile
   copy:
@@ -61,6 +64,7 @@
     dest: /opt/app/Dockerfile
     mode: '0640'
   become: true
+  tags: docker
 
 - name: Copy Prometheus config
   copy:
@@ -68,20 +72,22 @@
     dest: /opt/app/prometheus.yml
     mode: '0640'
   become: true
-
+  
+  tags: docker
 - name: Copy Grafana provisioning files
   copy:
     src: templates/grafana/
     dest: /opt/app/grafana/
     mode: '0640'
   become: true
+  tags: docker
   
 - name: Run docker-compose stack
   community.docker.docker_compose_v2:
     project_src: /opt/app
     state: present
   become: true
-
+  tags: docker
 
 # - name: Build DockerImage
 #   shell: dock

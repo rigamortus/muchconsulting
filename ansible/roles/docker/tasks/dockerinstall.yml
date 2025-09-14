@@ -11,6 +11,23 @@
   become_user: root
   become: yes
 
+
+- name: Install Docker
+  apt:
+    name: 
+      - docker.io
+      - docker-compose-plugin
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Start Docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  become: true
+
 # - name: Install Docker using official script
 #   shell: |
 #     curl -fsSL https://get.docker.com -o get-docker.sh
@@ -49,6 +66,17 @@
     mode: '0640'
   become: true
   tags: docker
+
+
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+  become: true
+
+
+
 
 - name: Copy application files
   copy:
@@ -93,6 +121,6 @@
 #   shell: dock
 
 - name: Run Container
-  shell: docker compose -f /opt/app/docker-compose.yml up -d 
+  shell: /usr/bin/docker compose -f /opt/app/docker-compose.yml up -d --build
   become: true
   tags: docker

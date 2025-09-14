@@ -12,7 +12,6 @@
 - name: Allow SSH on demo-network
   google.cloud.gcp_compute_firewall:
     name: allow-ssh
-    #network: "https://www.googleapis.com/compute/v1/projects/{{ lookup('env','GCP_PROJECT') }}/global/networks/gcp-vpc"
     network:
       name: gcp-vpc
     allowed:

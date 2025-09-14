@@ -21,10 +21,10 @@
         type: ONE_TO_ONE_NAT
     zone: europe-west1-b
     project: "{{ lookup('env','GCP_PROJECT') }}"
-    auth_kind: serviceaccount
-    service_account_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
+    auth_kind: application
+    #auth_kind: serviceaccount
+    #service_account_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
     state: "{{ infra_state | default('present') }}"
-    #tags: ssh
   register: vm
 # - name: set vpc variable
 #   shell: "echo 'ansible_hos: {{ vm.networkInterfaces.accessConfigs.natIP }}' >> ~/devops-demo/ansible/roles/docker/vars/main.yml"
@@ -39,9 +39,12 @@
 
 - name: Tag VM with 'ssh'
   shell: |
-    gcloud compute instances add-tags {{ vm.name }} \
-      --tags ssh \
-      --zone {{ vm.zone }} \
+    gcloud compute firewall-rules create allowo-ssh \
+      --allow tcp:22 \
+      --description "Allow SSH from anywhere" \
+      --source-ranges 0.0.0.0/0 \
+      --target-tags ssh \
+      --network gcp-vpc \
       --project {{ lookup('env','GCP_PROJECT') }} \
       --quiet
   when: infra_state == 'present'

@@ -93,6 +93,6 @@
 #   shell: dock
 
 - name: Run Container
-  shell: docker-compose -f /opt/app/docker-compose.yml up -d 
+  shell: docker compose -f /opt/app/docker-compose.yml up -d 
   become: true
   tags: docker

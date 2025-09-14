@@ -91,8 +91,8 @@ jobs:
         PROJECT_ID: ${{ secrets.GCP_PROJECT }}
         PROJECT_NUMBER: ${{ secrets.GCP_PROJECT_NUMBER }}
       with:
-        workload_identity_provider: projects/$PROJECT_NUMBER/locations/global/workloadIdentityPools/github/providers/github-provider
-        service_account: github-actions-sa@$PROJECT_ID.iam.gserviceaccount.com
+        workload_identity_provider: projects/1048085250712/locations/global/workloadIdentityPools/github/providers/github-provider
+        service_account: github-actions-sa@muchconsulting.iam.gserviceaccount.com
 
     
 

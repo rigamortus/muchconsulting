@@ -1,13 +1,22 @@
 ---
-- name: Unhold all packages
-  shell: apt-mark unhold $(apt-mark showhold)
-  ignore_errors: true
+# - name: Unhold all packages
+#   shell: apt-mark unhold $(apt-mark showhold)
+#   ignore_errors: true
 
-- name: Fix broken installs
-  apt:
-    upgrade: dist
-    update_cache: yes
+# - name: Fix broken installs
+#   apt:
+#     upgrade: dist
+#     update_cache: yes
+#   become: true
+
+- name: Install Docker using official script
+  shell: |
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+  args:
+    creates: /usr/bin/docker
   become: true
+
 - name: Install Docker-related Packages
   package:
     name: '{{ item }}'

@@ -11,6 +11,7 @@
 - name: second step
   hosts: targets
   gather_facts: false
+  connection: ssh
   roles:
    - name: docker
      role: docker

@@ -6,15 +6,22 @@
 
 - name: Create private SSH key from secret
   copy:
-    content: "{{ lookup('env', 'SSH_PRIVATE_KEY') }}"
+    content: "{{ lookup('env', 'SSH_PRIVATE_KEY') }}\n"  # Add newline
     dest: ~/.ssh/my-gcp-key
     mode: '0600'
 
-- name: Create public SSH key from secret  
-  copy:
-    content: "{{ lookup('env', 'SSH_PUBLIC_KEY') }}"
-    dest: ~/.ssh/my-gcp-key.pub
-    mode: '0644'
+- name: Generate public key from private key
+  shell: ssh-keygen -y -f ~/.ssh/my-gcp-key > ~/.ssh/my-gcp-key.pub
+  args:
+    creates: ~/.ssh/my-gcp-key.pub
+
+- name: Debug - Check key format
+  shell: head -1 ~/.ssh/my-gcp-key
+  register: key_check
+
+- name: Show key format
+  debug:
+    var: key_check.stdout
 
 - name: Create a Compute Instance
   google.cloud.gcp_compute_instance:

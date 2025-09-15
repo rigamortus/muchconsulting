@@ -22,3 +22,17 @@
     auth_kind: "{{ gcp_cred_kind }}"
     state: "{{ infra_state | default('present') }}"
 
+- name: Allow Traffic on demo-network
+  google.cloud.gcp_compute_firewall:
+    name: allow-traffic
+    network:
+      name: gcp-vpc
+    allowed:
+      - ip_protocol: tcp
+        ports: ["80"]
+    source_ranges: ["0.0.0.0/0"]
+    target_tags: ["ssh"]
+    project: "{{ lookup('env','GCP_PROJECT') }}"
+    auth_kind: "{{ gcp_cred_kind }}"
+    state: "{{ infra_state | default('present') }}"
+

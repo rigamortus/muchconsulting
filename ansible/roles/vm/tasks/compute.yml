@@ -6,7 +6,7 @@
 
 - name: Create private SSH key from secret
   copy:
-    content: "{{ lookup('env', 'SSH_PRIVATE_KEY') }}\n"  # Add newline
+    content: "{{ lookup('env', 'SSH_PRIVATE_KEY') }}\n"
     dest: ~/.ssh/my-gcp-key
     mode: '0600'
 

@@ -140,7 +140,7 @@
   copy:
     src: templates/prometheus/prometheus.yml
     dest: /opt/app/prometheus.yml
-    mode: '0640'
+    mode: '0644'
   become: true
 
   tags: docker

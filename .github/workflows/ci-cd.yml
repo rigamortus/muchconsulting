@@ -115,4 +115,4 @@ jobs:
       env:
         Server: ${{ env.Server }}
       run: |
-        curl https://$Server/health | grep pass
+        curl http://$Server/health | grep pass

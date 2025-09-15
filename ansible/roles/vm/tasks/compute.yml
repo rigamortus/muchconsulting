@@ -1,3 +1,21 @@
+- name: Create .ssh directory
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: '0700'
+
+- name: Create private SSH key from secret
+  copy:
+    content: "{{ lookup('env', 'SSH_PRIVATE_KEY') }}"
+    dest: ~/.ssh/my-gcp-key
+    mode: '0600'
+
+- name: Create public SSH key from secret  
+  copy:
+    content: "{{ lookup('env', 'SSH_PUBLIC_KEY') }}"
+    dest: ~/.ssh/my-gcp-key.pub
+    mode: '0644'
+
 - name: Create a Compute Instance
   google.cloud.gcp_compute_instance:
     name: testvm

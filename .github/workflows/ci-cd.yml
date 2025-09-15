@@ -127,7 +127,7 @@ jobs:
       uses: dawidd6/action-ansible-playbook@93764e7048f4dd16117d134dadb4b36e8ee73227
       with:
         playbook: ansible/roles/main.yml
-        inventory: targets
+        inventory: localhost
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         options: |
           --extra-vars "gcp_project=${{ vars.GCP_PROJECT }} gcp_cred_kind=application region=europe-west1 zone=europe-west1-b infra_state=present"

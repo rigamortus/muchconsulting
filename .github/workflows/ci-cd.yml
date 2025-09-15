@@ -130,6 +130,5 @@ jobs:
       with:
         playbook: ansible/roles/main.yml
         inventory: localhost
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
         options: |
           --extra-vars "gcp_project=${{ vars.GCP_PROJECT }} gcp_cred_kind=application region=europe-west1 zone=europe-west1-b infra_state=present"

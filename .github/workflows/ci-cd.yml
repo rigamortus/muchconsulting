@@ -86,7 +86,7 @@ jobs:
         chmod 644 ~/.ssh/my-gcp-key.pub
 
     - name: Auth to GCP (Workload Identity Federation)
-      uses: google-github-actions/auth@v2
+      uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
       env:
         PROJECT_ID: ${{ vars.GCP_PROJECT }}
         PROJECT_NUMBER: ${{ vars.GCP_PROJECT_NUMBER }}

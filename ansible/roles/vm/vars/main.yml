@@ -2,8 +2,6 @@
 # vars file for vm
 gcp_project: "{{ lookup('env','GCP_PROJECT') }}"
 gcp_cred_kind: "application"
-#gcp_cred_kind: "serviceaccount"
 gcp_cred_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
 zone: "europe-west1-b"
 region: "europe-west1"
-#infra_state: "absent"

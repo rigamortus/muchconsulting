@@ -1,8 +1,4 @@
 ---
-# - name: Unhold all packages
-#   shell: apt-mark unhold $(apt-mark showhold)
-#   ignore_errors: true
-
 - name: Update and upgrade apt packages
   apt:
     upgrade: yes
@@ -45,41 +41,12 @@
     update_cache: yes
   become: true
 
-# - name: Install Docker
-#   apt:
-#     name: 
-#       - docker.io
-#       - docker-compose-plugin
-#     state: present
-#     update_cache: yes
-#   become: true
-
 - name: Start Docker service
   systemd:
     name: docker
     state: started
     enabled: yes
   become: true
-
-# - name: Install Docker using official script
-#   shell: |
-#     curl -fsSL https://get.docker.com -o get-docker.sh
-#     sh get-docker.sh
-  # args:
-  #   creates: /usr/bin/docker
-  # become: true
-
-# - name: Install Docker-related Packages
-#   apt:
-#     name: '{{ item }}'
-#     state: present
-#     update_cache: yes
-#   loop:
-#       - docker.io
-#       - docker-compose
-#   become_user: root
-#   become: yes
-
 
 - name: Ensure /opt directory exists
   file:
@@ -116,9 +83,6 @@
     groups: docker
     append: yes
   become: true
-
-
-
 
 - name: Copy application files
   copy:
@@ -158,9 +122,6 @@
 #     state: present
 #   become: true
 #   tags: docker
-
-# - name: Build DockerImage
-#   shell: dock
 
 - name: Run Container
   shell: /usr/bin/docker compose -f /opt/app/docker-compose.yml up -d --build

@@ -4,8 +4,3 @@
 - include_tasks: disk.yml
 - include_tasks: ip.yml
 - include_tasks: compute.yml
-
-# - include_tasks: compute.yml
-# - include_tasks: ip.yml
-# - include_tasks: disk.yml
-# - include_tasks: network.yml

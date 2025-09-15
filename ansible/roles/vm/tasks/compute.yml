@@ -33,7 +33,6 @@
       source: "{{ disk }}"
     metadata:
       ssh-keys: "ubuntu:{{ lookup('file', '~/.ssh/my-gcp-key.pub') }}"
-      #startup-script-url: gs:://graphite-playground/bootstrap.sh
       cost-center: 'muchconsulting'
     labels:
       environment: development
@@ -47,12 +46,8 @@
     zone: europe-west1-b
     project: "{{ lookup('env','GCP_PROJECT') }}"
     auth_kind: application
-    #auth_kind: serviceaccount
-    #service_account_file: "{{ lookup('env','GCP_SERVICE_ACCOUNT_FILE') }}"
     state: "{{ infra_state | default('present') }}"
   register: vm
-# - name: set vpc variable
-#   shell: "echo 'ansible_hos: {{ vm.networkInterfaces.accessConfigs.natIP }}' >> ~/devops-demo/ansible/roles/docker/vars/main.yml"
 
 - name: Add new VM to inventory group 'targets'
   add_host:
@@ -75,5 +70,12 @@
   ignore_errors: true
   when: infra_state == 'present'
 
-# - debug:
-#     var: vm
+- name: Tag VM with 'ssh'
+  shell: |
+    gcloud compute instances add-tags testvm \
+      --tags ssh \
+      --zone europe-west1-b \
+      --project {{ lookup('env','GCP_PROJECT') }} \
+      --quiet
+  ignore_errors: true
+  when: infra_state == 'present'

@@ -92,34 +92,12 @@ jobs:
         PROJECT_NUMBER: ${{ vars.GCP_PROJECT_NUMBER }}
       with:
         workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github/providers/github-provider
-        service_account: github-actions-sa@${{ vars.GCP_PROJECT }}.iam.gserviceaccount.com
-
-    
+        service_account: github-actions-sa@${{ vars.GCP_PROJECT }}.iam.gserviceaccount.com    
 
     - name: Install Ansible and dependencies
       run: |
         python -m pip install --upgrade pip
         pip install ansible google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
-
-    # - name: Configure GCP credentials
-    #   uses: google-github-actions/auth@v1
-    #   with:
-    #     token_format: 'access_token'
-    #     workload_identity_provider: ${{ secrets.GCP_WIP }}
-    #     service_account: ${{ secrets.GCP_SA_EMAIL }}
-
-    # - name: Set up gcloud CLI
-    #   uses: google-github-actions/setup-gcloud@v1
-    #   with:
-    #     project_id: ${{ secrets.GCP_PROJECT }}
-    #     export_default_credentials: true
-
-    # - name: Run Ansible Playbook
-    #   env:
-    #     GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
-    #     GCP_SERVICE_ACCOUNT_FILE: ${{ secrets.GCP_SA_FILE }}
-    #   run: |
-    #     ansible-playbook -i "localhost," -c local ansible/playbook.yml --extra-vars "gcp_project=${{ secrets.GCP_PROJECT }} gcp_cred_kind=serviceaccount gcp_cred_file=${{ secrets.GCP_SA_FILE }} region=us-central1 zone=us-central1-a infra_state=present docker_image=docker.io/davidkalugo/fastapi-demo:latest"
 
     - name: Run playbook
       env:

@@ -4,6 +4,5 @@
     region: "{{ region }}"
     project: "{{ gcp_project }}"
     auth_kind: "{{ gcp_cred_kind }}"
-    #ervice_account_file: "{{ gcp_cred_file }}"
     state: "{{ infra_state | default('present') }}"
   register: address

@@ -110,3 +110,9 @@ jobs:
         inventory: localhost
         options: |
           --extra-vars "gcp_project=${{ vars.GCP_PROJECT }} gcp_cred_kind=application region=europe-west1 zone=europe-west1-b infra_state=present"
+    
+    - name: Deployment Test
+      env:
+        Server: ${{ env.Server }}
+      run: |
+        curl https://$Server/health | grep pass

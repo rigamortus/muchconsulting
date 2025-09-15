@@ -57,6 +57,12 @@
     ansible_ssh_private_key_file: ~/.ssh/my-gcp-key
   when: infra_state == 'present'
 
+
+- name: Set IP variable
+  shell:
+    echo "Server={{ vm.networkInterfaces[0].accessConfigs[0].natIP }}" >> $GITHUB_ENV
+  when: infra_state == 'present'
+
 - name: Tag VM with 'ssh'
   shell: |
     gcloud compute firewall-rules create allowo-ssh \

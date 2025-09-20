@@ -4,7 +4,7 @@ This project deploys a FastAPI using Docker Compose on a Google Cloud Platform V
 
 
 ## FastAPI
-The FastAPI written in Python exposes four(4) endpoints: "/", "/health", "/info" (for versioning), and "/metrics" for Prometheus scraping.
+The FastAPI written in Python exposes four(4) endpoints: __"/"__, __"/health"__, __"/info"__ (for versioning), and __"/metrics"__ for Prometheus scraping.
 
 ## Ansible Roles
 Two Ansible roles were used for automation: __VM__ and __Docker__.

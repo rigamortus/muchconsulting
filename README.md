@@ -12,6 +12,11 @@ Two Ansible roles were used for automation: __VM__ and __Docker__.
 ```bash
 ansible-galaxy init docker vm --init_path ansible/roles
 ```
+To run the Ansible playbook:
+```bash
+ansible-playbook main.yml --extra-vars infra_state=present
+```
+
 ### Roles
 - __VM__: Creates a VPC, a VM with a public IP and a disk, registers the VM's IP as the target for configuration, and configures SSH access to enable Ansible configuration.
 

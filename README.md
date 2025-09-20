@@ -1,9 +1,9 @@
 ```mermaid
 flowchart LR
-    Start --> Input[User Input]
-    Input --> Process[Process Data]
-    Process --> Valid{Valid?}
-    Valid -->|Yes| Save[Save to DB]
-    Valid -->|No| Error[Show Error]
-    Save --> End
-    Error --> Input
+    Developer --> Input[Git Push]
+    Input --> Configuration[Ansible]
+    Configuration --> VM[GCP VM]
+    VM -->API[Python Fast API]
+    VM --> Prometheus
+    VM --> Grafana
+    Grafana --> Developer

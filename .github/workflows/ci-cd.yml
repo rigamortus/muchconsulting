@@ -1,4 +1,4 @@
-name: Deploy Fast API Application with Monitoring
+name: Deploy Fast API with Monitoring
 
 on: workflow_dispatch
 permissions:
@@ -111,7 +111,7 @@ jobs:
         options: |
           --extra-vars "gcp_project=${{ vars.GCP_PROJECT }} gcp_cred_kind=application region=europe-west1 zone=europe-west1-b infra_state=present"
     
-    - name: Deployment Test
+    - name: Smoke Test
       env:
         Server: ${{ env.Server }}
       run: |

@@ -11,7 +11,7 @@
     update_cache: yes
     cache_valid_time: 86400
   become_user: root
-  become: yes
+  become: true
 
 - name: Install prerequisites
   apt:
@@ -121,13 +121,6 @@
     mode: '0640'
   become: true
   tags: docker
-  
-# - name: Run docker-compose stack
-#   community.docker.docker_compose_v2:
-#     project_src: /opt/app
-#     state: present
-#   become: true
-#   tags: docker
 
 - name: Run Container
   shell: /usr/bin/docker compose -f /opt/app/docker-compose.yml up -d --build

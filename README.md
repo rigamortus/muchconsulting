@@ -6,7 +6,5 @@ flowchart LR
     Configuration --> VM[GCP VM]
     VM -->API[Python Fast API]
     API --> Prometheus
-    VM --> Prometheus
-    VM --> Grafana
     Prometheus --> Grafana
     Grafana --> Developer

@@ -5,6 +5,8 @@ flowchart LR
     CI/CD --> Configuration[Ansible]
     Configuration --> VM[GCP VM]
     VM -->API[Python Fast API]
+    API --> Prometheus
     VM --> Prometheus
     VM --> Grafana
+    Prometheus --> Grafana
     Grafana --> Developer

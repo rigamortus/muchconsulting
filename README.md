@@ -1,7 +1,8 @@
 ```mermaid
 flowchart LR
     Developer --> Input[Git Push]
-    Input --> Configuration[Ansible]
+    Input --> CI/CD[Github Actions]
+    CI/CD --> Configuration[Ansible]
     Configuration --> VM[GCP VM]
     VM -->API[Python Fast API]
     VM --> Prometheus

@@ -1,8 +1,4 @@
 ```mermaid
-sequenceDiagram
-    participant D as Developer
-    participant GP as Git Push
-    D->>GP
 flowchart LR
     Start --> Input[User Input]
     Input --> Process[Process Data]
